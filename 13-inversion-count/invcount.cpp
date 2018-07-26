@@ -15,26 +15,48 @@ vector<T> get_input_sequence(size_t n) {
     return sequence;
 }
 
-uint64_t count_inversions(vector<int> numbers, uint64_t i, uint64_t j) {
+uint64_t count_inversions(vector<int> * numbers, uint64_t lb, uint64_t ub) {
     // base case 1
-    if (j - i < 2) {
+    if (ub - lb + 1 < 2) {
         return 0;
     }
 
-    // base case 2
-    if (j - i == 2) {
-        return numbers[i] > numbers[j] ? 1 : 0;
-    }
-
     // divide
-    uint64_t m = (j + i) / 2;
-    uint64_t lftCount = count_inversions(numbers, i, m);
-    uint64_t rgtCount = count_inversions(numbers, m + 1, j);
+    uint64_t m = (ub + lb) / 2;
+    uint64_t lftCount = count_inversions(numbers, lb, m);
+    uint64_t rgtCount = count_inversions(numbers, m + 1, ub);
 
     // conquer
     uint64_t mrgCount = 0;
-    
+    vector<int> tmp (ub-lb+1);
 
+    int u = m + 1;
+    int l = lb;
+    int i = 0;
+    while (l <= m && u <= ub) {
+        if ((*numbers)[l] > (*numbers)[u]) {
+            tmp[i++] = (*numbers)[u++];
+        }
+        else {
+            tmp[i++] = (*numbers)[l++];
+            mrgCount += u-1-m;
+        }
+    }
+
+    while (l <= m) {
+        tmp[i++] = (*numbers)[l++];
+        mrgCount += ub-m;
+    }
+
+    while (u <= ub) {
+        tmp[i++] = (*numbers)[u++];
+    }
+
+    for (int i = lb; i <= ub; ++i) {
+        (*numbers)[i] = tmp[i-lb];
+    }
+
+    // cout << "chiudo range " << lb << "-" << ub << " con " << lftCount << " " << rgtCount << " " << mrgCount << endl;
     return lftCount + rgtCount + mrgCount;
 }
 
@@ -48,9 +70,14 @@ int main(int argc, char const *argv[])
     for (int i = 0; i < t; ++i) {
         cin >> n;
         vector<int> numbers = get_input_sequence<int>(n);
-        cout << count_inversions(numbers, 0, n) << endl;
-        cout << numbers[0] << endl;
+        cout << count_inversions(&numbers, 0, n-1) << endl;
+        // for (int i = 0; i < n; i++) {
+        //     cout << numbers[i] << " ";
+        // }
+        cout << endl;
     }
+
+    
     
     return 0;
 }
