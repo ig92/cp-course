@@ -1,39 +1,52 @@
 #include <iostream>
 #include <vector>
+#include <stack>
+
 using namespace std;
 
-/**
- * Note: this code assumes no error in input
- * It is only thought for coding competition purposes.
- */
+template<typename T>
+vector<T> get_input_sequence(size_t n) {
+    vector<T> sequence(n);
+
+    for(size_t i = 0; i < n; ++i) 
+        cin >> sequence[i];
+    return sequence;
+}
+
+void next_larger(vector<int> numbers) {
+    string out = "-1";
+    stack<int> stack;
+    stack.push(numbers[numbers.size()-1]);
+    for (int i = numbers.size()-2; i > -1; --i) {
+        while (!stack.empty() && numbers[i] >= stack.top())
+            stack.pop();
+        
+        if (stack.empty()) {
+            out = to_string(-1) + " " + out;
+        } else {
+            out = to_string(stack.top()) + " " + out;
+        }
+
+        stack.push(numbers[i]);
+    }
+
+    cout << out << endl;
+}
 
 int main() {
-    // number of cases in input
-    int cases;
-    cin >> cases;
+    std::ios_base::sync_with_stdio(false);
+
+    int k;
+    cin >> k;
 
     // read input data
-    for (int i = 0; i < cases; ++i) {
-        // dimension of the next array
-        int dim;
-        cin >> dim;
+    for (int i = 0; i < k; ++i) {
+        int n;
+        cin >> n;
 
-        vector<int> vect;
-
-        // read the array
-        for (int j = 0; j < dim; ++j) {
-            int num;
-            cin >> num;
-            vect.push_back(num);
-        }
-
-        vector<int> nextLarger;
-        int possibleLarger = vect.at(dim-1);
-        nextLarger.push_back(-1);
-        for (int j = dim-2; j >= 0; --j) {
-            if (vect.at(j) < possibleLarger)
-                nextLarger.push_back(possibleLarger);
-        }
+        vector<int> numbers = get_input_sequence<int>(n);
+        
+        next_larger(numbers);
     }
 
     return 0;

@@ -8,6 +8,15 @@
         "memory": "cpp",
         "type_traits": "cpp",
         "iosfwd": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "limits": "cpp",
+        "algorithm": "cpp",
+        "chrono": "cpp",
+        "ios": "cpp",
+        "tuple": "cpp",
+        "utility": "cpp",
+        "deque": "cpp",
+        "string": "cpp",
+        "ratio": "cpp"
     }
 }

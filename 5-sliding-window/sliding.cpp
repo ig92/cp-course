@@ -1,71 +1,81 @@
 #include <iostream>
 #include <vector>
 #include <deque>
+
 using namespace std;
 
-/**
- * Note: this code assumes no error in input
- * It is only thought for coding competition purposes.
- */
+template<typename T>
+vector<T> get_input_sequence(size_t n) {
+    vector<T> sequence(n);
 
-/**
- * Prints the maximum among each of k consecutive
- * values in vect.
- */
-void print_maximums(vector<int> a, int k) {
+    for(size_t i = 0; i < n; ++i) 
+        cin >> sequence[i];
+    return sequence;
+}
+
+void k_maximums(vector<int> numbers, int k) {
     deque <int> q;
 
-    // first max in queue
-    int max = 0;
-    int i = 1;
-    for (; i < k; ++i) {
-        if (a[max] < a[i]) {
+    int max = -1;
+    q.push_front(0);
+
+    for (int i = 0; i < k; ++i) {
+        if (numbers[i] >= numbers[q.front()]) {
+            q.clear();
+            q.push_front(i);
             max = i;
+        } else {
+            while (!q.empty() && (numbers[i] >= numbers[q.back()])) {
+                q.pop_back();
+            }
+            q.push_back(i);
         }
     }
-    i = max;
-    for (i = max; i < k; ++i)
-        q.push_back(i);
-
-    cout << a[q.front()] << " ";
     
-    for (; i < a.size(); ++i) {
-        // update sliding window
-        q.pop_front();
-        q.push_back(i);
+    cout << numbers[max] << " ";
 
-        // if max just got out, find the next one
-        if (max < i-k+1) {
-            while (!q.empty() && a[i] > a[q.front()])
-                q.pop_front();
+    for (int i = k; i < numbers.size(); ++i) {
+        // if the max is no more in the window
+        if (((i - k) + 1) > max) {
+            q.pop_front();
             max = q.front();
         }
+        
+        if (q.empty()) {
+            q.push_back(i);
+            max = i;
+        } else {
+            if (numbers[i] >= numbers[q.front()]) {
+                q.clear();
+                q.push_front(i);
+                max = i;
+            } else {
+                while (!q.empty() && (numbers[i] >= numbers[q.back()])) {
+                    q.pop_back();
+                }
+                q.push_back(i);
+            }
+        }
 
-        cout << a[q.front()] << " ";
+        cout << numbers[max] << " ";
     }
 }
 
 int main() {
-    // number of cases in input
-    int cases;
-    cin >> cases;
+    std::ios_base::sync_with_stdio(false);
+
+    int c;
+    cin >> c;
 
     // read input data
-    for (int i = 0; i < cases; ++i) {
+    for (int i = 0; i < c; ++i) {
         // dimension of the next array
-        int dim, k;
-        cin >> dim >> k;
+        int n, k;
+        cin >> n >> k;
 
-        vector<int> vect;
-
-        // read the array
-        for (int j = 0; j < dim; ++j) {
-            int num;
-            cin >> num;
-            vect.push_back(num);
-        }
+        vector<int> numbers = get_input_sequence<int>(n);
         
-        print_maximums(vect, k);
+        k_maximums(numbers, k);
         
         cout << endl;
     }
