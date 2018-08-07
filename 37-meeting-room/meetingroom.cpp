@@ -4,9 +4,6 @@
 
 using namespace std;
 
-#define WHITE 0
-#define BLACK 1
-
 template<typename T>
 vector<T> get_input_sequence(size_t n) {
     vector<T> sequence(n);

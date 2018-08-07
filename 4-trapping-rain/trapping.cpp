@@ -1,56 +1,62 @@
 #include <iostream>
 #include <vector>
+
 using namespace std;
 
-/**
- * Note: this code assumes no error in input
- * It is only thought for coding competition purposes.
- */
+template<typename T>
+vector<T> get_input_sequence(size_t n) {
+    vector<T> sequence(n);
 
-void print_trappings(vector<int>);
+    for(size_t i = 0; i < n; ++i) 
+        cin >> sequence[i];
+    return sequence;
+}
+
+int counter(vector<int> numbers) {
+    int to_count = 0;
+
+    int i = 0;
+    int j = 1;
+
+    int n = numbers.size();
+
+    if (n < 3) {
+        return 0;
+    }
+
+    while (i < n && j < n) {
+        int to_cut = 0;
+        while (j < n && numbers[i] > numbers[j]) {
+            to_cut += numbers[j++];
+        }
+
+        if (j == n) {
+            vector<int> tmp (n-i);
+            for (int k = tmp.size()-1; k > -1; --k)
+                tmp[k] = numbers[n-k-1];
+            to_count += counter(tmp);
+            return to_count;
+        }
+
+        to_count += (j-i-1) * numbers[i] - to_cut;
+        i = j++;
+    }
+
+    return to_count;
+}
 
 int main() {
-    // number of cases in input
-    int cases;
-    cin >> cases;
+    int t;
+    cin >> t;
 
-    // read input data
-    for (int i = 0; i < cases; ++i) {
-        // dimension of the next array
-        int dim;
-        cin >> dim;
+    while (t-- > 0) {
+        int n;
+        cin >> n;
 
-        vector<int> vect;
+        vector<int> numbers = get_input_sequence<int>(n);
 
-        // read the array
-        for (int j = 0; j < dim; ++j) {
-            int num;
-            cin >> num;
-            vect.push_back(num);
-        }
-        
-        print_trappings(vect);
+        cout << counter(numbers) << endl;
     }
 
     return 0;
-}
-
-/**
- * Prints the number of tappings of an elevation map.
- */
-void print_trappings(vector<int> vect) {
-    if (vect.empty())
-        return;
-
-    int traps = 0;
-    int current = vect.at(0);
-
-    vector<int>::iterator it;
-    for (it = vect.begin(); it != vect.end(); ++it)
-        if (current > *it)
-            traps += (current - *it);
-        else
-            current = *it;
-
-    cout << traps << endl;
 }

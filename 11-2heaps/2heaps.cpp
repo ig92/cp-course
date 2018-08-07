@@ -39,23 +39,24 @@ int main() {
     // sort according to cubes values
     sort(cubes.begin(), cubes.end(), [](cube a, cube b) {return a.value < b.value;});
 
+    // assign heap
     int heap = 1;
-    int c = 0;
-    for (int i = 0; i < 2 * n; ++i) {
-        c++;
+    int i = 0;
+    while (i < 2 * n) {
         cubes[i].heap = heap;
         heap = heap % 2 + 1;
-        int j = i + 1;
-        for (; j < 2 * n; ++j) {
-            if (cubes[i].value == cubes[j].value) {
-                c = (j-i == 1) ? c + 1 : c;
-            } else {
-                break;
-            }
-            cubes[j].heap = heap;
-            heap = heap % 2 + 1;
+        i++;
+    }
+
+    // count
+    int c = 2 * n;
+    i = 1;
+    while (i < 2 * n) {
+        i++;
+        while (i < 2 * n && cubes[i].value == cubes[i-2].value) {
+            c--;
+            i++;
         }
-        i = j-1;
     }
 
     cout << (c/2) * (c-c/2) << endl; 

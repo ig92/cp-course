@@ -9,9 +9,9 @@ struct Node {
 
 void traversal(Node * node, vector<int> * numbers) {
     if (node != NULL) {
-        isBSTrec(node->left, numbers);
-        numbers.emplace_back(node->data);
-        isBSTrec(node->right, numbers);
+        traversal(node->left, numbers);
+        numbers->emplace_back(node->data);
+        traversal(node->right, numbers);
     }
 }
 

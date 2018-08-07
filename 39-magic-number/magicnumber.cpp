@@ -8,23 +8,19 @@ using namespace std;
 bool is_magic(string number) {
     if (number.length() == 0)
         return true;
-        
-    if (number[0] != '1')
-        return false;
+    
+    int n = number.length();
 
-    if (is_magic(number.substr(1)))
-        return true;
+    if (number[n-1] == '1')
+        return is_magic(number.substr(0, n-1));
     
-    if (number[1] != '4')
-        return false;
+    if (number[n-2] == '1' && number[n-1] == '4')
+        return is_magic(number.substr(0, n-2));
     
-    if (is_magic(number.substr(2)))
-        return true;
-    
-    if (number[2] != '4')
-        return false;
-    
-    return is_magic(number.substr(3));
+    if (number[n-3] == '1' && number[n-2] == '4' && number[n-1] == '4')
+        return is_magic(number.substr(0, n-3));
+
+    return false;
 }
 
 int main() {
