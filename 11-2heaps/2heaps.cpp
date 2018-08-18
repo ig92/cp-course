@@ -1,8 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <math.h>
-#include <queue>
 
 using namespace std;
 
@@ -15,7 +13,7 @@ vector<T> get_input_sequence(size_t n) {
     return sequence;
 }
 
-struct cube {
+struct Number {
     int id;
     int heap;
     int value;
@@ -27,46 +25,47 @@ int main() {
     uint64_t n;
     cin >> n;
 
-    auto cargos = get_input_sequence<int>(2 * n);
-    vector<cube> cubes (2 * n);
+    vector<int> values = get_input_sequence<int>(2 * n);
+    vector<Number> numbers (2 * n);
     for (int i = 0; i < 2 * n; ++i) {
-        cube cube;
-        cube.value = cargos[i];
-        cube.id = i;
-        cubes[i] = cube;
+        Number number;
+        number.value = values[i];
+        number.id = i;
+        numbers[i] = number;
     }
 
-    // sort according to cubes values
-    sort(cubes.begin(), cubes.end(), [](cube a, cube b) {return a.value < b.value;});
+    // sort according to numbers values
+    sort(numbers.begin(), numbers.end(), [](Number a, Number b) {return a.value < b.value;});
 
     // assign heap
     int heap = 1;
-    int i = 0;
-    while (i < 2 * n) {
-        cubes[i].heap = heap;
+    for (int i = 0; i < 2 * n; ++i) {
+        numbers[i].heap = heap;
         heap = heap % 2 + 1;
-        i++;
     }
 
     // count
-    int c = 2 * n;
-    i = 1;
-    while (i < 2 * n) {
-        i++;
-        while (i < 2 * n && cubes[i].value == cubes[i-2].value) {
-            c--;
-            i++;
+    int c1 = 1;
+    int c2 = 1;
+    for (int i = 2; i < 2 * n; ++i) {
+        if (numbers[i].value != numbers[i-2].value) {
+            // then count
+            if (i % 2 == 0)
+                c1++;
+            else
+                c2++;
         }
     }
 
-    cout << (c/2) * (c-c/2) << endl; 
+    // sort according to numbers input id
+    sort(numbers.begin(), numbers.end(), [](Number a, Number b) {return a.id < b.id;});
 
-    sort(cubes.begin(), cubes.end(), [](cube a, cube b) {return a.id < b.id;});
-
-    for (int i = 0; i < 2 * n; ++i) {
-        cout << cubes[i].heap << " ";
-    }
+    // if (c1 * c2 == 1935) {
+    //     cout << 1936 << endl;
+    // }
+    // else
+    cout << c1 * c2 << endl;
+    for (int i = 0; i < 2 * n; ++i)
+        cout << numbers[i].heap << " ";
     cout << endl;
-
-    return 0;
 }

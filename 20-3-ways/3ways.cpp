@@ -33,11 +33,24 @@ int main() {
 
     sum = sum / 3;
 
-    int acc = numbers[0];
-    for (int i = 1; i < n; ++i) {
+    // compute number of suffixes that sum to target value
+    vector<int64_t> n_suffs (n);
+    int64_t acc = 0;
+    uint64_t counter = 0;
+    for (int i = n-1; i > -1; --i) {
+        n_suffs[i] = (numbers[i] + acc == sum) ? ++counter : counter;
         acc += numbers[i];
-        if 
     }
+
+    // computer the three ways
+    acc = 0;
+    counter = 0;
+    for (int i = 0; i < n-2; ++i) {
+        counter = (numbers[i] + acc == sum) ? n_suffs[i+2]+counter : counter;
+        acc += numbers[i];
+    }   
+
+    cout << counter << endl;
 
     return 0;
 }
