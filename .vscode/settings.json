@@ -24,6 +24,12 @@
         "string_view": "cpp",
         "typeinfo": "cpp",
         "istream": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "queue": "cpp",
+        "__locale": "cpp",
+        "locale": "cpp",
+        "__hash_table": "cpp",
+        "unordered_map": "cpp",
+        "__tuple": "cpp"
     }
 }
