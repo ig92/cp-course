@@ -30,6 +30,17 @@
         "locale": "cpp",
         "__hash_table": "cpp",
         "unordered_map": "cpp",
-        "__tuple": "cpp"
+        "__tuple": "cpp",
+        "sstream": "cpp",
+        "__string": "cpp",
+        "__config": "cpp",
+        "__nullptr": "cpp",
+        "cstddef": "cpp",
+        "exception": "cpp",
+        "new": "cpp",
+        "stdexcept": "cpp",
+        "__tree": "cpp",
+        "map": "cpp",
+        "set": "cpp"
     }
 }
