@@ -1,15 +1,3 @@
-#include <stddef.h>
-#include <utility>
-#include <algorithm>
-#include <iostream>
-
-using namespace std;
-
-struct Node{
-	int data;
-	Node *left, *right;
-};
-
 pair<int,int> maxPathSumRec(struct Node * node) {
     if (node->left == NULL && node->right == NULL) {
         pair<int,int> p;

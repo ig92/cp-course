@@ -23,6 +23,7 @@ int main() {
 
     sort(numbers.begin(), numbers.end(), [](int a, int b) {return a > b;});
 
+    // count frequencies
     vector<int64_t> freqs (n);
     for (int i = 0; i < q; ++i) {
         int l, r;
@@ -32,20 +33,15 @@ int main() {
             freqs[r]--;
     }
 
-    for (int i = 1; i < n; ++i) {
+    // inclusive prefix sum
+    for (int i = 1; i < n; ++i)
         freqs[i] += freqs[i-1];
-    }
 
     sort(freqs.begin(), freqs.end(), [](int a, int b) {return a > b;});
 
     uint64_t sum = 0;
-    for (int i = 0; i < freqs.size(); ++i) {
-        if (freqs[i] == 0) {
-            break;
-        }
-
+    for (int i = 0; i < freqs.size() && freqs[i] != 0; ++i)
         sum += freqs[i] * numbers[i];
-    }
 
     cout << sum << endl;
 

@@ -20,7 +20,7 @@ int main() {
     cin >> n;
     cin >> k;
 
-    auto numbers = get_input_sequence<int>(n);
+    vector<int> numbers = get_input_sequence<int>(n);
 
     sort(numbers.begin(), numbers.end());
 

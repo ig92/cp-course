@@ -13,25 +13,6 @@ vector<T> get_input_sequence(size_t n) {
     return sequence;
 }
  
-int isPreorder(vector<int> numbers, int n) {
-    stack<int> s;
-    int root = 0;
- 
-    for (int i = 0; i < n; ++i) {
-        if (numbers[i] < root)
-            return 0;
- 
-        while (!s.empty() && s.top() < numbers[i]) {
-            root = s.top();
-            s.pop();
-        }
-
-        s.push(numbers[i]);
-    }
-
-    return 1;
-}
- 
 int main() {
     std::ios_base::sync_with_stdio(false);
 
@@ -44,7 +25,24 @@ int main() {
 
         vector<int> numbers = get_input_sequence<int>(n);
 
-        cout << isPreorder(numbers, n) << endl;
+        stack<int> s;
+        int root = 0;
+    
+        int i = 0;
+        for (; i < n; ++i) {
+            if (numbers[i] < root)
+                break;
+    
+            while (!s.empty() && s.top() < numbers[i]) {
+                root = s.top();
+                s.pop();
+            }
+
+            s.push(numbers[i]);
+        }
+
+        cout << ((i == n) ? 1 : 0) << endl;
     }
+    
     return 0;
 }

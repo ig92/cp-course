@@ -2,7 +2,6 @@
 #include <vector>
 #include <algorithm>
 #include <math.h>
-#include <queue>
 
 using namespace std;
 
@@ -15,41 +14,34 @@ vector<T> get_input_sequence(size_t n) {
     return sequence;
 }
 
-// To compare two points
 struct City {
     double distance = 0;
-    uint64_t population = 0;
-};
-
-class myComparator {
-public:
-    int operator() (City a, City b) {
-        return a.distance > b.distance;
-    }
+    int population = 0;
 };
 
 int main() {
     std::ios_base::sync_with_stdio(false);
 
-    uint64_t n, s;
+    int n, s;
     cin >> n;
     cin >> s;
 
     // get cities
-    priority_queue <City, vector<City>, myComparator> pq;
-    for (auto i = 0; i < n; ++i) {
-        auto data = get_input_sequence<int>(3);
-        City c;
-        c.distance = sqrt(pow(data[0],2) + pow(data[1],2));
-        c.population = data[2];
-        pq.push(c);
+    vector<City> cities (n);
+    for (int i = 0; i < n; ++i) {
+        vector<int> data = get_input_sequence<int>(3);
+        cities[i].distance = sqrt(pow(data[0],2) + pow(data[1],2));
+        cities[i].population = data[2];
     }
 
+    sort(cities.begin(), cities.end(), [](City a, City b) {return a.distance <= b.distance;});
+
     double radius = 0;
-    while (!pq.empty() && s < 1000000) {
-        City c = pq.top(); pq.pop();
-        s += c.population;
-        radius = c.distance;
+    for (int i = 0; i < n; ++i) {
+        if (s >= 1000000)
+            break;
+        radius = cities[i].distance;
+        s += cities[i].population;
     }
 
     cout.precision(8);

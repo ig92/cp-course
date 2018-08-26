@@ -20,15 +20,10 @@ int counter(vector<int> numbers) {
 
     int n = numbers.size();
 
-    if (n < 3) {
-        return 0;
-    }
-
     while (i < n && j < n) {
         int to_cut = 0;
-        while (j < n && numbers[i] > numbers[j]) {
+        while (j < n && numbers[i] > numbers[j])
             to_cut += numbers[j++];
-        }
 
         if (j == n) {
             vector<int> tmp (n-i);

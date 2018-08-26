@@ -60,18 +60,18 @@ int main() {
 
     vector<int> numbers = get_input_sequence<int>(n);
     
-    unordered_map<int,int> leftmap;
+    unordered_map<int,int> map;
     vector<int> left (n);
     for (int i = 0; i < n; ++i) {
-        leftmap[numbers[i]]++;
-        left[i] = leftmap[numbers[i]];
+        map[numbers[i]]++;
+        left[i] = map[numbers[i]];
     }
 
-    unordered_map<int,int> rightmap;
+    map.clear();
     vector<int> right (n);
     for (int i = n-1; i > -1; --i) {
-        rightmap[numbers[i]]++;
-        right[i] = rightmap[numbers[i]];
+        map[numbers[i]]++;
+        right[i] = map[numbers[i]];
     }
     
     int max = -1;

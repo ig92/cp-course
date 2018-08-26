@@ -36,7 +36,7 @@ int main() {
 
     // sort according to numbers values
     sort(numbers.begin(), numbers.end(), [](Number a, Number b) {return a.value < b.value;});
-
+    
     // assign heap
     int heap = 1;
     for (int i = 0; i < 2 * n; ++i) {
@@ -60,10 +60,6 @@ int main() {
     // sort according to numbers input id
     sort(numbers.begin(), numbers.end(), [](Number a, Number b) {return a.id < b.id;});
 
-    // if (c1 * c2 == 1935) {
-    //     cout << 1936 << endl;
-    // }
-    // else
     cout << c1 * c2 << endl;
     for (int i = 0; i < 2 * n; ++i)
         cout << numbers[i].heap << " ";

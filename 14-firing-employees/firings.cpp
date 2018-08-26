@@ -1,8 +1,6 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
 #include <math.h>
-#include <queue>
 
 using namespace std;
 
@@ -23,18 +21,16 @@ struct Node {
 };
 
 bool is_prime(int num) {
-    if (num < 2)
-        return 0;
-    else if (num > 2 && num % 2 == 0)
-        return 0;
+    // simple cases
+    if (num < 2 || (num > 2 && num % 2 == 0))
+        return false;
     else if (num==2)
-        return 1;
-    else {
-        for (int i = 2; i <= sqrt(num); ++i)
-            if((num % i) == 0)
-                return 0;
-        return 1;
-    }
+        return true;
+    // test it
+    for (int i = 2; i <= sqrt(num); ++i)
+        if((num % i) == 0)
+            return false;
+    return true;
 }
 
 int compute_n_black_list(vector<Node> * nodes, Node * node, int depth) {
@@ -60,13 +56,14 @@ int main() {
     int t;
     cin >> t;
     
-    string result = "";
-    for (int i = 0; i < t; ++i) {
+    while (t-- > 0) {
         int n;
         cin >> n;
+
         Node * root;
         vector<Node> nodes (n);
         vector<int> numbers = get_input_sequence<int>(n);
+        
         for (int j = 0; j < n; ++j) {
             nodes[j].rank = j+1;
             nodes[j].parent = numbers[j];
@@ -77,10 +74,8 @@ int main() {
             }
         }
 
-        result += to_string(compute_n_black_list(&nodes, root, 0)) + "\n";
+        cout << compute_n_black_list(&nodes, root, 0) << endl;
     }
-
-    cout << result;
 
     return 0;
 }

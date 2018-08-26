@@ -1,8 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
-#include <math.h>
-#include <queue>
 
 using namespace std;
 
@@ -16,10 +13,9 @@ vector<T> get_input_sequence(size_t n) {
 }
 
 uint64_t count_inversions(vector<int> * numbers, uint64_t lb, uint64_t ub) {
-    // base case 1
-    if (ub - lb + 1 < 2) {
+    // base case
+    if (ub - lb + 1 < 2)
         return 0;
-    }
 
     // divide
     uint64_t m = (ub + lb) / 2;
@@ -34,29 +30,28 @@ uint64_t count_inversions(vector<int> * numbers, uint64_t lb, uint64_t ub) {
     int l = lb;
     int i = 0;
     while (l <= m && u <= ub) {
-        if ((*numbers)[l] > (*numbers)[u]) {
+        if ((*numbers)[l] > (*numbers)[u])
             tmp[i++] = (*numbers)[u++];
-        }
         else {
             tmp[i++] = (*numbers)[l++];
             mrgCount += u-1-m;
         }
     }
 
+    // count the rest if any
     while (l <= m) {
         tmp[i++] = (*numbers)[l++];
         mrgCount += ub-m;
     }
 
-    while (u <= ub) {
+    // copy the rest
+    while (u <= ub)
         tmp[i++] = (*numbers)[u++];
-    }
 
-    for (int i = lb; i <= ub; ++i) {
+    // copy back to numbers
+    for (int i = lb; i <= ub; ++i)
         (*numbers)[i] = tmp[i-lb];
-    }
 
-    // cout << "chiudo range " << lb << "-" << ub << " con " << lftCount << " " << rgtCount << " " << mrgCount << endl;
     return lftCount + rgtCount + mrgCount;
 }
 
@@ -64,20 +59,15 @@ int main(int argc, char const *argv[])
 {
     std::ios_base::sync_with_stdio(false);
 
-    uint64_t t, n;
+    uint64_t t;
     cin >> t;
 
-    for (int i = 0; i < t; ++i) {
+    while (t-- > 0) {
+        uint64_t n;
         cin >> n;
         vector<int> numbers = get_input_sequence<int>(n);
         cout << count_inversions(&numbers, 0, n-1) << endl;
-        // for (int i = 0; i < n; i++) {
-        //     cout << numbers[i] << " ";
-        // }
-        cout << endl;
     }
-
-    
     
     return 0;
 }
