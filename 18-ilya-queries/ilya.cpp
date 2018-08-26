@@ -12,10 +12,10 @@ int main() {
 
     vector<int> v (sequence.length());
     
-    for (int i = 0; i < sequence.length() - 1; ++i) {
+    for (int i = 0; i < sequence.length() - 1; ++i)
         v[i] = (sequence[i] == sequence[i+1]) ? 1 : 0;
-    }
 
+    // exclusive prefix sum
     int tmp = v[0];
     v[0] = 0;
     for (int i = 1; i < sequence.length(); ++i) {

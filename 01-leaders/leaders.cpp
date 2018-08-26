@@ -1,48 +1,38 @@
 #include <iostream>
 #include <vector>
+
 using namespace std;
 
-/**
- * Note: this code assumes no error in input
- * It is only thought for coding competition purposes.
- */
+template<typename T>
+vector<T> get_input_sequence(size_t n) {
+    vector<T> sequence(n);
+
+    for(size_t i = 0; i < n; ++i) 
+        cin >> sequence[i];
+    return sequence;
+}
 
 int main() {
-    // number of cases in input
-    int cases;
-    cin >> cases;
+    std::ios_base::sync_with_stdio(false);
+    
+    int t;
+    cin >> t;
 
-    // read input data
-    for (int i = 0; i < cases; ++i) {
-        // dimension of the next array
-        int dim;
-        cin >> dim;
+    while (t-- > 0) {
+        int n;
+        cin >> n;
 
-        vector<int> vect;
+        vector<int> vect = get_input_sequence<int>(n);
 
-        // read the array
-        for (int j = 0; j < dim; ++j) {
-            int num;
-            cin >> num;
-            vect.push_back(num);
-        }
-
-        // compute leaders
-        int max = vect.at(vect.size()-1); 
-        vector<int> leaders;
-        leaders.push_back(max);
-        for (int j = dim-2; j >= 0; --j) {
-            if (vect.at(j) > max == 1) {
-                leaders.push_back(vect.at(j));
-                max = vect.at(j);
+        int max = n-1;
+        string leaders = to_string(vect[n-1]);
+        for (int i = n-2; i >= 0; --i) {
+            if (vect[i] > vect[max] == 1) {
+                leaders = to_string(vect[i]) + " " + leaders;
+                max = i;
             }
         }
-        
-        // print leaders
-        for (int j = leaders.size()-1; j >= 0; --j)
-            cout << leaders.at(j) << " ";
-        
-        cout << endl;
+        cout << leaders << endl;
     }
 
     return 0;

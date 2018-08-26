@@ -13,40 +13,37 @@ vector<T> get_input_sequence(size_t n) {
     return sequence;
 }
 
-void next_larger(vector<int> numbers) {
-    string out = "-1";
+void print_next_larger(vector<int> * numbers, int n) {
     stack<int> stack;
-    stack.push(numbers[numbers.size()-1]);
-    for (int i = numbers.size()-2; i > -1; --i) {
-        while (!stack.empty() && numbers[i] >= stack.top())
+    stack.push(numbers->at(n-1));
+    numbers->at(n-1) = -1;
+    for (int i = n - 2; i >= 0; --i) {
+        while (!stack.empty() && numbers->at(i) >= stack.top())
             stack.pop();
         
-        if (stack.empty()) {
-            out = to_string(-1) + " " + out;
-        } else {
-            out = to_string(stack.top()) + " " + out;
-        }
-
-        stack.push(numbers[i]);
+        int elem = numbers->at(i);
+        numbers->at(i) = stack.empty() ? -1 : stack.top();
+        stack.push(elem);
     }
 
-    cout << out << endl;
+    for (int i = 0; i < n; ++i)
+        cout << numbers->at(i) << " ";
+    cout << endl;
 }
 
 int main() {
     std::ios_base::sync_with_stdio(false);
 
-    int k;
-    cin >> k;
+    int t;
+    cin >> t;
 
-    // read input data
-    for (int i = 0; i < k; ++i) {
+    while (t-- > 0) {
         int n;
         cin >> n;
 
         vector<int> numbers = get_input_sequence<int>(n);
         
-        next_larger(numbers);
+        print_next_larger(&numbers, n);
     }
 
     return 0;
