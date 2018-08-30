@@ -1,16 +1,67 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include "unionfind.h"
 
 using namespace std;
 
 struct Animal {
+    int id;
     int species;
-    bool unassigned;
-    Animal() {
-        species = 0;
+    Animal(int _id) {
+        id = _id;
     }
+};
+
+
+struct Node {
+    Animal * data;
+    int rank;
+    Node* parent;
+    Node(Animal * _data) {
+        data = _data;
+        rank = 0;
+        parent = this;
+    }
+};
+
+class UnionFind {
+public:
+    void MakeSet(Node * node) {
+        forest.push_back(node);
+    }
+
+    // Union by Rank, if equal y becomes root
+    void Union(Node* x, Node* y) {
+        Node* rootX = Find(x);
+        Node* rootY = Find(y);
+
+        if (rootX->rank > rootY->rank) {
+            rootY->parent = rootX;
+            return;
+        }
+
+        rootX->parent = rootY;
+        if (rootX->rank == rootY->rank)
+            rootY->rank++;
+    }
+
+    // Find with Path Compression
+    Node* Find(Node* x) {
+        if (x->parent != x)
+            x->parent = Find(x->parent);
+        return x->parent;
+    }
+
+    vector<Node*> Forest() {
+        return forest;
+    }
+
+    int Relation(Node * i, Node * j) {
+
+    }
+
+private:
+    vector<Node*> forest;
 };
 
 int main() {
@@ -23,50 +74,37 @@ int main() {
         int n, k;
         cin >> n >> k;
 
-        UnionFind<Animal*> uf;
-        while (n-- > 0) {
-            uf.MakeSet(new Animal);
+        vector<Node*> nodes (n);
+
+        UnionFind uf;
+        for (int i = 0; i < n; ++i) {
+            Node * n = new Node(new Animal(i));
+            nodes[i] = n;
+            uf.MakeSet(n);
         }
 
-        vector<UnionFind<Animal*>::Node*> forest = uf.Forest();
-
         int counter = 0;
-        for (int i = 0; i < k; i++) {
-            int type, s, d;
-            cin >> type >> s >> d;
+        while (k-- > 0) {
+            int type, i, j;
+            cin >> type >> i >> j;
 
-            if (s > n || s < 1 || d > n || d < 1 || (s == d && type == 2)) {
+            if (i > n || j > n) {
                 counter++;
                 continue;
             }
 
-            UnionFind<Animal*>::Node* nodeS = forest[s-1];
-            UnionFind<Animal*>::Node* nodeD = forest[d-1];
-
-            nodeS = uf.Find(nodeS);
-            nodeD = uf.Find(nodeD);
+            Node * inode = nodes[i];
+            Node * jnode = nodes[j];
 
             if (type == 1) {
-                if (nodeS->data->species != nodeD->data->species) {
-                    counter++;
-                    continue;
-                }
-                uf.Union(nodeS, nodeD);
+                // i and j should be the same
+                int relation = uf.Relation(inode, jnode);
+                
             } else {
-                if (nodeS == nodeD) {
-                    counter++;
-                    continue;
-                }
-
-                
-                
-                if (nodeD->data->species != nodeS->data->species + 1 % 3) {
-                    counter++;
-                    continue;
-                }
-                
+                // i should eat j
             }
-        }
+        } 
+
     }
 
 

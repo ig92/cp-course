@@ -15,9 +15,10 @@ vector<T> get_input_sequence(size_t n) {
 
 struct Number {
     int id;
-    int heap;
     int value;
 };
+
+bool heap[201];
 
 int main() {
     std::ios_base::sync_with_stdio(false);
@@ -38,13 +39,13 @@ int main() {
     sort(numbers.begin(), numbers.end(), [](Number a, Number b) {return a.value < b.value;});
     
     // assign heap
-    int heap = 1;
+    int heapID = false;
     for (int i = 0; i < 2 * n; ++i) {
-        numbers[i].heap = heap;
-        heap = heap % 2 + 1;
+        heap[numbers[i].id] = heapID;
+        heapID = !heapID;
     }
 
-    // count
+    // counting
     int c1 = 1;
     int c2 = 1;
     for (int i = 2; i < 2 * n; ++i) {
@@ -57,11 +58,8 @@ int main() {
         }
     }
 
-    // sort according to numbers input id
-    sort(numbers.begin(), numbers.end(), [](Number a, Number b) {return a.id < b.id;});
-
     cout << c1 * c2 << endl;
     for (int i = 0; i < 2 * n; ++i)
-        cout << numbers[i].heap << " ";
+        cout << (heap[i] ? 2 : 1) << " ";
     cout << endl;
 }

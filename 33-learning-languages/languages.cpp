@@ -24,10 +24,9 @@ void dfs(int i, vector<int> * nodes) {
     
     nodes->at(i) = BLACK;
 
-    for (int j = 0; j < nodes->size(); j++) {
+    for (int j = 0; j < nodes->size(); j++)
         if (G[i][j] == 1)
             dfs(j, nodes);
-    }
 }
 
 int main() {
@@ -45,6 +44,7 @@ int main() {
         vector<int> ithLangs = get_input_sequence<int>(nIthLangs);
 
         for (int j = 0; j < nIthLangs; j++) {
+            // if i is the first one in order to speak this language
             if (langs[ithLangs[j]-1] == -1) {
                 langs[ithLangs[j]-1] = i;
             } else {
@@ -54,17 +54,18 @@ int main() {
         }
     }
 
+    // special case when no one speak a language
+    // langs is initialized with -1, that's why -m
     int sum = 0;
-    for (int i = 0; i < m; i++) {
+    for (int i = 0; i < m; i++)
         sum += langs[i];
-    }
     if (sum == -m) {
         cout << n << endl;
         return 0;
     }
 
     vector<int> vertices (n, WHITE);
-    int counter = -1;
+    int counter = 0;
     for (int i = 0; i < vertices.size(); i++) {
         if (vertices[i] == WHITE) {
             counter++;
@@ -72,6 +73,6 @@ int main() {
         }
     }
 
-    cout << counter << endl;
+    cout << counter-1 << endl;
     return 0;
 }

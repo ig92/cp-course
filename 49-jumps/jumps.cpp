@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
 
 using namespace std;
 #define MAX 101
@@ -14,24 +13,18 @@ vector<T> get_input_sequence(size_t n) {
     return sequence;
 }
 
-
-
 int jumps(vector<int> * numbers, vector<int> * dp, int i, int n) {
-    if (i >= n-1) {
+    if (i >= n-1)
         return 0;
-    }
 
-    if (numbers->at(i) == 0) {
+    if (numbers->at(i) == 0)
         return MAX;
-    }
 
-    if (dp->at(i) != MAX) {
+    if (dp->at(i) != MAX)
         return dp->at(i);
-    }
 
-    for (int j = 1; j <= numbers->at(i); ++j) {
+    for (int j = 1; j <= numbers->at(i); ++j)
         dp->at(i) = min(dp->at(i), 1 + jumps(numbers, dp, i+j, n));
-    }
 
     return dp->at(i);
 }

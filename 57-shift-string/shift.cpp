@@ -46,7 +46,6 @@ int main() {
     string B;
 
     cin >> n;
-
     cin >> A >> B;
 
     B = B + B;

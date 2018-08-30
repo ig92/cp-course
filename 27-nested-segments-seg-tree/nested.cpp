@@ -28,9 +28,8 @@ public:
         pos += ((size + 1) / 2) - 1;
         while (1) {
             seg_tree[pos]++;
-            if (pos == 0) {
+            if (pos == 0)
                 break;
-            }
             pos = par(pos);
         }
     }
@@ -38,13 +37,6 @@ public:
     uint64_t count(uint64_t i) {
         return rec_count(0, i, 0, ((size+1) / 2) - 1, 0);
     }
-
-    void print() {
-        for (int i = 0; i < size; ++i)
-            cout << seg_tree[i] << " ";
-        cout << endl;
-    }
-
 private:
     uint64_t size;
     uint64_t n;

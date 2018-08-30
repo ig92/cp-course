@@ -21,13 +21,9 @@ bool dfs(int i) {
 
     letters[i] = GREY;
 
-    for (int j = 0; j < 26; ++j) {
-        if (G[i][j] == 1) {
-            if (!dfs(j)) {
-                return false;
-            }
-        }
-    }
+    for (int j = 0; j < 26; ++j)
+        if (G[i][j] == 1 && !dfs(j))
+            return false;
 
     letters[i] = BLACK;
 
@@ -41,10 +37,7 @@ int main() {
 
     int n;
     cin >> n;
-
-    // endline char
-    string s;
-    getline(cin, s);
+    cin.ignore();
 
     vector<string> names (n);
 
@@ -55,16 +48,19 @@ int main() {
         string current = names[k];
         string next = names[k+1];
 
-        // assume no case:
-        // care
-        // car   <- blank
+        // find leftmost position where chars differ
         int i = 0;
         while (i < current.length() && i < next.length() && current[i] == next[i])
             i++;
         
-        if (i == current.length()) {
+        // if the first string has been processed
+        // then it is okay and we just move forward
+        if (i == current.length())
             continue;
-        }
+
+        // no cases like:
+        // rivest
+        // rives
         if (i == next.length()) {
             cout << "Impossible" << endl;
             return 0;
@@ -74,11 +70,9 @@ int main() {
     }
 
     for (int i = 0; i < 26; ++i) {
-        if (letters[i] == WHITE) {
-            if (!dfs(i)) {
-                cout << "Impossible" << endl;
-                return 0;
-            }
+        if (letters[i] == WHITE && !dfs(i)) {
+            cout << "Impossible" << endl;
+            return 0;
         }
     }
 

@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
 
 using namespace std;
 
@@ -15,10 +14,9 @@ int main() {
     int i = 0;
     int j = 0;
 
-    while (i < s.length() && j < hello.length()) {
+    while (i < s.length() && j < hello.length())
         if (s[i++] == hello[j])
             j++;
-    }
 
     cout << (j == hello.length() ? "YES" : "NO") << endl;
 

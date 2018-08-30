@@ -97,14 +97,12 @@ void inc(uint64_t i, uint64_t j, int64_t qty) {
 }
 
 int64_t rmq(uint64_t i, uint64_t j) {
-    if (i <= j) {
+    if (i <= j)
         return rec_rmq(i, j, 0, n-1, 0);
-    } else {
-        return min(
-            rec_rmq(i, n-1, 0, n-1, 0),
-            rec_rmq(0, j, 0, n-1, 0)
-        );
-    }
+    return min(
+        rec_rmq(i, n-1, 0, n-1, 0),
+        rec_rmq(0, j, 0, n-1, 0)
+    );
 }
 
 template<typename T>

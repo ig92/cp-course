@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
 
 using namespace std;
 
@@ -14,19 +13,16 @@ vector<T> get_input_sequence(size_t n) {
 }
 
 int lis(vector<int> numbers, int n) {
-    if (n == 0) {
+    if (n == 0)
         return 0;
-    }
 
     vector<int> M (n,1);
 
     int m = -1;
     for (int i = 1; i < n; ++i) {
-        for (int j = 0; j < i; ++j) {
-            if (numbers[j] < numbers[i]) {
+        for (int j = 0; j < i; ++j)
+            if (numbers[j] < numbers[i])
                 M[i] = max(M[i], 1 + M[j]);
-            }
-        }
         m = max(m, M[i]);
     }
 
@@ -42,11 +38,9 @@ int main() {
     while (t-- > 0) {
         int n;
         cin >> n;
-
         vector<int> numbers = get_input_sequence<int>(n);
-
         cout << lis(numbers, n) << endl;
     }
+    
     return 0;
 }
-

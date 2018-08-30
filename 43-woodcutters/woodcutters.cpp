@@ -1,19 +1,9 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
 
 using namespace std;
 #define LEFT 0
 #define RIGHT 1
-
-template<typename T>
-vector<T> get_input_sequence(size_t n) {
-    vector<T> sequence(n);
-
-    for(size_t i = 0; i < n; ++i) 
-        cin >> sequence[i];
-    return sequence;
-}
 
 struct Tree {
     int pos;    // position
@@ -29,13 +19,8 @@ int main() {
     cin >> n;
 
     vector<Tree> trees (n);
-    for (int i = 0; i < n; ++i) {
-        int pos, hgt;
-        cin >> pos >> hgt;
-
-        trees[i].pos = pos;
-        trees[i].hgt = hgt;
-    }
+    for (int i = 0; i < n; ++i)
+        cin >> trees[i].pos >> trees[i].hgt;
 
     int counter = 0;
 

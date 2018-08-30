@@ -22,7 +22,7 @@ struct Node {
     int color;
 };
 
-void dfs(int i, vector<Node> * nodes, int m, int n) {
+int dfs(int i, vector<Node> * nodes, int m, int n) {
     nodes->at(i).color = BLACK;
 
     vector<int> neighbors;
@@ -37,10 +37,11 @@ void dfs(int i, vector<Node> * nodes, int m, int n) {
     
     for (int j = 0; j < neighbors.size(); j++) {
         int k = neighbors[j];
-        if (nodes->at(k).color == WHITE) {
+        if (nodes->at(k).color == WHITE)
             dfs(k, nodes, m, n);
-        }
     }
+
+    return 1;
 }
 
 int main() {
@@ -64,13 +65,9 @@ int main() {
         }
 
         int counter = 0;
-
-        for (int i = 0; i < n * m; i++) {
-            if (nodes[i].color == WHITE) {
-                dfs(i, &nodes, m, n);
-                counter++;
-            }
-        }
+        for (int i = 0; i < n * m; i++)
+            if (nodes[i].color == WHITE)
+                counter += dfs(i, &nodes, m, n);
 
         cout << counter << endl;
     }

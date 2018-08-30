@@ -23,7 +23,7 @@ struct Node {
     vector<int> neighbors;
 };
 
-int sccID = 0;
+int nSCC = 0;
 int IDX = 0;
 stack<int> s;
 vector<Node> nodes;
@@ -52,28 +52,25 @@ void scc(int i) {
             next = s.top();
             s.pop();
             nodes[next].onStack = false;
-            nodes[next].sccID = sccID;
+            nodes[next].sccID = nSCC;
         } while (nodes[i].index != nodes[next].index);
-        sccID++; 
+        nSCC++; 
     }
 }
 
 void tarjan() {
-    for (int i = 0; i < nodes.size(); ++i) {
-        if (nodes[i].index == -1) { // not yet discovered
+    for (int i = 0; i < nodes.size(); ++i)
+        if (nodes[i].index == -1) // not yet discovered
             scc(i);
-        }
-    }
 }
 
 int main() {
     std::ios_base::sync_with_stdio(false);
 
+    // read nodes
     int n;
     cin >> n;
-
     vector<int> costs = get_input_sequence<int>(n);
-
     for (int i = 0; i < n; i++) {
         Node n;
         n.cost = costs[i];
@@ -81,42 +78,42 @@ int main() {
         nodes.push_back(n);
     }
 
+    // read edges
     int m;
     cin >> m;
-
     for (int i = 0; i < m; i++) {
         int x, y;
         cin >> x >> y;
-
         nodes[x-1].neighbors.push_back(y-1);
     }
     
+    // find strongly connected components
     tarjan();
 
-    vector<int> min (sccID, 1e9);
-    
+    // pay for each scc the minimum cost
+    vector<int> min (nSCC, 1e9);    
     for (int i = 0; i < n; ++i) {
         Node n = nodes[i];
-        if (n.cost < min[n.sccID]) {
+        if (n.cost < min[n.sccID])
             min[n.sccID] = n.cost;
-        }
     }
 
+    // total cost
     uint64_t sum = 0;
-    for (int i = 0; i < sccID; ++i)
+    for (int i = 0; i < nSCC; ++i)
         sum += min[i];
 
-    vector<int> ways (sccID, 0);
-
+    // compute number of ways
+    vector<int> ways (nSCC, 0);
     for (int i = 0; i < n; ++i) {
         Node n = nodes[i];
-        if (n.cost == min[n.sccID]) {
+        if (n.cost == min[n.sccID])
             ways[n.sccID]++;
-        }
     }
 
+    // total number of ways
     uint64_t totWays = 1;
-    for (int i = 0; i < sccID; ++i)
+    for (int i = 0; i < nSCC; ++i)
         totWays *= ways[i];
 
     cout << sum << " " << (totWays % 1000000007) << endl;

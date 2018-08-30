@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
 
 using namespace std;
 
@@ -17,12 +16,10 @@ int knapsack(vector<int> wgt, vector<int> val, int n, int w) {
     int M [n+1][w+1];
 
     // init
-    for (int i = 0; i <= n; ++i) {
+    for (int i = 0; i <= n; ++i)
         M[i][0] = 0;
-    }
-    for (int i = 0; i <= w; ++i) {
+    for (int i = 0; i <= w; ++i)
         M[0][i] = 0;
-    }
 
     for (int i = 1; i <= n; ++i)
         for (int j = 1; j <= w; ++j)

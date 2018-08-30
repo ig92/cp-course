@@ -41,16 +41,16 @@ int main() {
 
         sort(meetings.begin(), meetings.end(), [](Meeting a, Meeting b) {return a.f < b.f;});
 
-        string schedule = to_string(meetings[0].index) + " ";
+        cout << meetings[0].index << " ";
 
         for (int i = 1, last = 0; i < n; ++i) {
             if (meetings[last].f < meetings[i].s) {
-                schedule += to_string(meetings[i].index) + " ";
+                cout << meetings[i].index <<  " ";
                 last = i;
             }
         }
 
-        cout << schedule << endl;
+        cout << endl;
     }
 
     return 0;

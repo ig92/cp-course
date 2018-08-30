@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
 
 using namespace std;
 
@@ -9,9 +8,7 @@ int main() {
 
     int t;
     cin >> t;
-    
-    string garbage; 
-    getline(cin, garbage);
+    cin.ignore();
 
     while (t-- > 0) {
         string str;
@@ -23,15 +20,14 @@ int main() {
         int M [n+1][n+1];
 
         for (int i = 0; i <= n; ++i) {
-            for (int j = 0; j <= n; ++j) {
+            for (int j = 0; j <= n; ++j)
                 M[i][j] = -1;
-            }
             M[i][i] = 1;
             if (i > 0)
                 M[i][i-1] = 0;
         }
 
-        for (int i = n; i > 0; --i) {
+        for (int i = n-1; i > 0; --i) {
             for (int j = i+1; j <= n; ++j) {
                 if (str[i-1] == str[j-1])
                     M[i][j] = 2 + M[i+1][j-1];

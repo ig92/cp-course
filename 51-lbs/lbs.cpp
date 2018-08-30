@@ -14,17 +14,14 @@ vector<T> get_input_sequence(size_t n) {
 }
 
 int lis(vector<int> numbers, vector<int> * M, int n) {
-    if (n == 0) {
+    if (n == 0)
         return 0;
-    }
 
     int m = -1;
     for (int i = 1; i < n; ++i) {
-        for (int j = 0; j < i; ++j) {
-            if (numbers[j] < numbers[i]) {
+        for (int j = 0; j < i; ++j)
+            if (numbers[j] < numbers[i])
                 M->at(i) = max(M->at(i), 1 + M->at(j));
-            }
-        }
         m = max(m, M->at(i));
     }
 
@@ -58,6 +55,6 @@ int main() {
             
         cout << max << endl;
     }
+    
     return 0;
 }
-

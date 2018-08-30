@@ -1,13 +1,11 @@
 #include <iostream>
 #include <vector>
-#include <string>
-#include <algorithm>
 
 using namespace std;
 
-bool is_magic(string number) {
+string is_magic(string number) {
     if (number.length() == 0)
-        return true;
+        return "YES";
     
     int n = number.length();
 
@@ -20,7 +18,7 @@ bool is_magic(string number) {
     if (number[n-3] == '1' && number[n-2] == '4' && number[n-1] == '4')
         return is_magic(number.substr(0, n-3));
 
-    return false;
+    return "NO";
 }
 
 int main() {
@@ -29,7 +27,7 @@ int main() {
     string number;
     getline(cin, number);
 
-    cout << (is_magic(number) ? "YES" : "NO") << endl;
+    cout << is_magic(number) << endl;
 
     return 0;
 }

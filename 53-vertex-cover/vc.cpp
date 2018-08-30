@@ -41,14 +41,12 @@ int main() {
 
     vector<Node> nodes (n);
 
-    for(int i = 0; i < n; ++i) {
+    for(int i = 0; i < n; ++i)
         nodes[i].state = WHITE;
-    }
 
     for (int i = 0; i < n-1; ++i) {
         int u,v;
         cin >> u >> v;
-
         nodes[u-1].children.push_back(&nodes[v-1]);
         nodes[v-1].children.push_back(&nodes[u-1]);
     }
@@ -59,4 +57,3 @@ int main() {
     
     return 0;
 }
-
