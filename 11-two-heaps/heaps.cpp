@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <queue>
+#include <math.h>
 
 using namespace std;
 
@@ -38,27 +40,35 @@ int main() {
     // sort according to numbers values
     sort(numbers.begin(), numbers.end(), [](Number a, Number b) {return a.value < b.value;});
     
-    // assign heap
+    // first heap assignment
+    int c1 = 1;
+    int c2 = 1;
+    queue<int> repeated;
     int heapID = false;
-    for (int i = 0; i < 2 * n; ++i) {
+    heap[numbers[0].id] = false;
+    heap[numbers[1].id] = true;
+    for (int i = 2; i < 2 * n; ++i) {
+        if (numbers[i].value == numbers[i-2].value) {
+            repeated.push(numbers[i].id);
+            continue;
+        }
+        if (heapID)
+            c1++;
+        else
+            c2++;
         heap[numbers[i].id] = heapID;
         heapID = !heapID;
     }
 
-    // counting
-    int c1 = 1;
-    int c2 = 1;
-    for (int i = 2; i < 2 * n; ++i) {
-        if (numbers[i].value != numbers[i-2].value) {
-            // then count
-            if (i % 2 == 0)
-                c1++;
-            else
-                c2++;
-        }
+    cout << c1 * c2 << endl;
+
+    // second heap assignment
+    while (!repeated.empty()) {
+        heap[repeated.front()] = heapID;
+        heapID = !heapID;
+        repeated.pop();
     }
 
-    cout << c1 * c2 << endl;
     for (int i = 0; i < 2 * n; ++i)
         cout << (heap[i] ? 2 : 1) << " ";
     cout << endl;

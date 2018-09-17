@@ -1,10 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <unordered_map>
-
-#define WHITE 1
-#define BLACK 2
 
 using namespace std;
 
@@ -20,61 +16,39 @@ vector<T> get_input_sequence(size_t n) {
 struct Node {
     int id;
     int color;
-    unordered_map<int,int> u;
-    int size;
-    int dfs;
+    int i;
+    int j;
+    bool visited;
     vector<Node*> children;
 };
 
-// costs O(nlogn)
-void init_maps(Node * root) {
-    root->dfs = BLACK;
-    if (root->children.size() == 0) {
-        root->u[root->color] = 1;
-        root->size = 1;
+Node nodes[100000];
+int n;
+int start = 0;
+
+void traverse(Node * root) {
+    if (root->visited)
         return;
-    }
 
-    root->u[root->color] = 1;
-    for (Node * child : root->children) {
-        if (child->dfs == WHITE) {
-            init_maps(child);
-            for (auto & pair : child->u) {
-                if (root->u.find(pair.first) == root->u.end()) {
-                    root->u[pair.first] = pair.second;
-                } else {
-                    root->u[pair.first] += pair.second;
-                }
-            }
-            root->size += child->size;
-        }
-    }
-
-    root->size += 1;
-}
-
-int at_least(int k, Node * root) {
-    uint64_t counter = 0;
-    for (auto & pair : root->u) {
-        if (pair.second >= k)
-            counter++;
-    }
-    return counter;
+    root->visited = true;
+    root->i = start++;
+    for (int i = 0; i < root->children.size(); ++i)
+        traverse(root->children[i]);
+    root->j = start-1;
 }
 
 int main() {
     std::ios_base::sync_with_stdio(false);
 
-    int n, m;
+    int m;
     cin >> n >> m;
 
     // read colors
-    vector<Node> nodes (n);
     vector<int> colors = get_input_sequence<int>(n);
     for (int i = 0; i < n; i++) {
         nodes[i].color = colors[i];
         nodes[i].id = i+1;
-        nodes[i].dfs = WHITE;
+        nodes[i].visited = false;
     }
     
     // read edges
@@ -85,15 +59,9 @@ int main() {
         nodes[v-1].children.push_back(&nodes[u-1]);
     }
 
-    // compute maps
-    init_maps(&nodes[0]);
+    traverse(&nodes[0]);
 
-    for (int i = 0; i < m; ++i) {
-        int v,k;
-        cin >> v >> k;
-
-        cout << at_least(k, &nodes[v-1]) << endl;
-    }
+    sort(nodes, nodes+n, [](Node a, Node b) {return a.i < ;});
 
     return 0;
 }

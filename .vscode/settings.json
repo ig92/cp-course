@@ -25,6 +25,9 @@
         "utility": "cpp",
         "__locale": "cpp",
         "locale": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "iosfwd": "cpp",
+        "__string": "cpp",
+        "type_traits": "cpp"
     }
 }
