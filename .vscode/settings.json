@@ -17,6 +17,7 @@
         "algorithm": "cpp",
         "bitset": "cpp",
         "chrono": "cpp",
+<<<<<<< HEAD
         "ios": "cpp",
         "limits": "cpp",
         "ratio": "cpp",
@@ -29,5 +30,8 @@
         "iosfwd": "cpp",
         "__string": "cpp",
         "type_traits": "cpp"
+=======
+        "ios": "cpp"
+>>>>>>> 238e238462bc2e3afcec73152a8baa1fdac61909
     }
 }
