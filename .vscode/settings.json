@@ -20,6 +20,11 @@
         "algorithm": "cpp",
         "string_view": "cpp",
         "iostream": "cpp",
-        "__locale": "cpp"
+        "__locale": "cpp",
+        "__split_buffer": "cpp",
+        "iterator": "cpp",
+        "queue": "cpp",
+        "stack": "cpp",
+        "type_traits": "cpp"
     }
 }
