@@ -16,6 +16,13 @@ int find(int x) {
     return P[x];
 }
 
+int mod3(int x) {
+	int remainder = x % 3;
+	if (remainder < 0)
+		remainder += 3;
+	return remainder;
+}
+
 int main() {
 	int t;
 	cin >> t;
@@ -43,16 +50,18 @@ int main() {
 			
             type--;
 			if (rx == ry) {
-				int diff = (S[x] - S[y]) % 3;
-                if (diff < 0)
-                    diff += 3;
-				if (diff != type) 
+				if (mod3(type + S[y] - S[x]) != 0) 
                     counter++;
 			}
 			else {
+				// otherwise, whatever is the type
+				// we need to connect the two sets
+				// with some relation
 				P[rx] = ry;
-				int i = (S[x] - S[y] - type) % 3;
-				S[rx] = (i < 0) ? -i : -i + 3;
+				int i = mod3(type + S[y] - S[x]);
+				if (i == 0)
+					i = 3;
+				S[rx] = i;
 			}
 		}
 		

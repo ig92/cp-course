@@ -109,9 +109,16 @@ int countSubstrings(string s) {
     vector<int> suffixArr = buildSuffixArray(s, n);
     vector<int> lcp = buildLCP(s, suffixArr);
 
-    int result = n - suffixArr[0];
-    for (int i = 1; i < lcp.size(); i++)
-        result += (n - suffixArr[i]) - lcp[i - 1];
+    int result = n * n;
+    // int sum = (n * n - n) / 2;
+    int sum = 0;
+    for (int i = 0; i < n; i++)
+        sum += i;
+
+    result -= sum;
+
+    for (int i = 0; i < n-1; i++)
+        result -= lcp[i];
 
     return result;
 }

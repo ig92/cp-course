@@ -25,6 +25,12 @@
         "iterator": "cpp",
         "queue": "cpp",
         "stack": "cpp",
-        "type_traits": "cpp"
+        "type_traits": "cpp",
+        "__tuple": "cpp",
+        "__functional_base_03": "cpp",
+        "chrono": "cpp",
+        "functional": "cpp",
+        "limits": "cpp",
+        "ratio": "cpp"
     }
 }
